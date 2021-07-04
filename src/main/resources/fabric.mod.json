@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "masaadditions",
+  "version": "${version}",
+  "name": "MasaAdditions",
+  "description": "Add-on for Masa's Mods (Tweakeroo, MiniHUD, Litematica)",
+  "authors": [
+    "Red.#9015"
+  ],
+  "contact": {
+    "homepage": "https://github.com/hp3721/masaadditions",
+    "sources": "https://github.com/hp3721/masaadditions"
+  },
+  "license": "GPL-3.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.red.masaadditions.MasaAdditions"
+    ]
+  },
+  "mixins": [
+    "masaadditions.tweakeroo_additions.tweakeroo_mixin.json",
+    "masaadditions.tweakeroo_additions.mixin.json",
+    "masaadditions.minihud_additions.minihud_mixin.json",
+    "masaadditions.minihud_additions.mixin.json",
+    "masaadditions.litematica_additions.litematica_mixin.json"
+  ],
+  "depends": {
+  },
+  "suggests": {
+    "tweakeroo": "*",
+    "minihud": "*",
+    "malilib": "*"
+  }
+}

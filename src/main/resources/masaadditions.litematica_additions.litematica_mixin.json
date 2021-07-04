@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.red.masaadditions.litematica_additions.litematica_mixin",
+  "compatibilityLevel": "JAVA_8",
+  "plugin": "com.red.masaadditions.litematica_additions.litematica_mixin.MixinPlugin",
+  "mixins": [
+    "MixinGuiMainMenu",
+    "MixinLitematicaGui"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

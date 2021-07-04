@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.red.masaadditions.tweakeroo_additions.tweakeroo_mixin",
+  "compatibilityLevel": "JAVA_8",
+  "plugin": "com.red.masaadditions.tweakeroo_additions.tweakeroo_mixin.MixinPlugin",
+  "mixins": [
+    "MixinCallbacks",
+    "MixinConfigs",
+    "MixinDisableConfigs",
+    "MixinExplosionCarpet",
+    "MixinFixesConfigs",
+    "MixinGenericConfigs",
+    "MixinGuiConfigs",
+    "MixinHotkeys",
+    "MixinInputHandler",
+    "MixinListsConfigs",
+    "MixinPlacementTweaks"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

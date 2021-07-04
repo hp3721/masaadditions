@@ -1,0 +1,28 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.red.masaadditions.tweakeroo_additions.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "plugin": "com.red.masaadditions.tweakeroo_additions.mixin.MixinPlugin",
+  "mixins": [
+    "MixinAnvilScreen",
+    "MixinBeaconBlockEntityRenderer",
+    "MixinBlockDustParticle",
+    "MixinBossBarHud",
+    "MixinChickenEntity",
+    "MixinClientPlayerEntity",
+    "MixinClientPlayerInteractionManager",
+    "MixinClientPlayNetworkHandler",
+    "MixinFlowerBlock",
+    "MixinInGameHud",
+    "MixinItemFrameEntityRenderer",
+    "MixinParticleManager",
+    "MixinPlayerEntity",
+    "MixinRecipeBookWidget",
+    "MixinSlimeBlock",
+    "MixinTitleScreen"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
