@@ -1,5 +1,6 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
+import com.red.masaadditions.MasaAdditions;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import com.red.masaadditions.tweakeroo_additions.tweaks.PlacementTweaks;
@@ -9,6 +10,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
@@ -65,9 +67,16 @@ public class MixinClientPlayerInteractionManager {
     }
 
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;attack(Lnet/minecraft/entity/Entity;)V"), cancellable = true)
-    private void onAttackEntity(PlayerEntity player, Entity target, CallbackInfo ci) {
+    private void onAttackEntity1(PlayerEntity player, Entity target, CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_ONE_HIT_KILL.getBooleanValue() && player.abilities.creativeMode && target instanceof LivingEntity && ((LivingEntity) target).getHealth() > 0f) {
             ((ClientPlayerEntity) player).sendChatMessage(String.format("/kill %s", target.getUuidAsString()));
+        }
+    }
+
+    @Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)
+    private void onAttackEntity2(PlayerEntity player, Entity target, CallbackInfo ci) {
+        if (FeatureToggleExtended.TWEAK_PREVENT_ATTACK_ENTITIES.getBooleanValue() && ConfigsExtended.Lists.PREVENT_ATTACK_ENTITIES_LIST.getStrings().contains(EntityType.getId(target.getType()).toString())) {
+            ci.cancel();
         }
     }
 }

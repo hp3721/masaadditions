@@ -1,10 +1,14 @@
 package com.red.masaadditions.tweakeroo_additions.util;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ShovelItem;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Random;
@@ -28,6 +32,39 @@ public class MiscUtils {
                         .move((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SPEED.getDoubleValue())
                         .scale((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SCALE.getDoubleValue()));
             }
+        }
+    }
+
+    public static boolean handleUseDragonEgg(Block block, ClientPlayerEntity player) {
+        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && block instanceof DragonEggBlock && !player.isSneaking();
+    }
+
+    public static boolean handleUseBed(Block block, ClientWorld world) {
+        return ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() && block instanceof BedBlock && !world.getDimension().isBedWorking();
+    }
+
+    public static boolean handleUseTools(Block block, Item heldItem) {
+        return (ConfigsExtended.Disable.DISABLE_FARMLAND_MAKING.getBooleanValue() && heldItem instanceof HoeItem && MiscUtils.isTillableBlock(block) || (ConfigsExtended.Disable.DISABLE_PATH_MAKING.getBooleanValue() && heldItem instanceof ShovelItem && block instanceof GrassBlock));
+    }
+
+    public static boolean isTillableBlock(Block block) {
+        return block instanceof GrassBlock || block instanceof GrassPathBlock || block.is(Blocks.DIRT);
+    }
+
+    public static int getSlotNumberForEquipmentSlot(EquipmentSlot type)
+    {
+        switch (type)
+        {
+            case HEAD:
+                return 5;
+            case CHEST:
+                return 6;
+            case LEGS:
+                return 7;
+            case FEET:
+                return 8;
+            default:
+                return -1;
         }
     }
 }

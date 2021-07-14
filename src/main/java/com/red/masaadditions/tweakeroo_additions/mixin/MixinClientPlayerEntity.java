@@ -10,11 +10,15 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
     @Shadow
     public int ticksSinceSprintingChanged;
+
+    @Shadow
+    public abstract boolean isSubmergedInWater();
 
     public MixinClientPlayerEntity(ClientWorld world, GameProfile profile) {
         super(world, profile);
@@ -22,10 +26,16 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
 
     @Inject(method = "setSprinting", at = @At("HEAD"), cancellable = true)
     private void setSprinting(boolean sprinting, CallbackInfo ci) {
-        if (ConfigsExtended.Disable.DISABLE_SWIMMING.getBooleanValue() && ConfigsExtended.Disable.DISABLE_SPRINTING_UNDERWATER.getBooleanValue()) {
+        if (ConfigsExtended.Disable.DISABLE_SPRINTING_UNDERWATER.getBooleanValue() && ((this.isTouchingWater() && !this.isSubmergedInWater()) || (ConfigsExtended.Disable.DISABLE_SWIMMING.getBooleanValue()))) {
             super.setSprinting(false);
             this.ticksSinceSprintingChanged = 0;
             ci.cancel();
         }
+    }
+
+    @Inject(method = "shouldSpawnSprintingParticles", at = @At("HEAD"), cancellable = true)
+    private void shouldSpawnSprintingParticles(CallbackInfoReturnable<Boolean> cir) {
+        if (ConfigsExtended.Disable.DISABLE_FOOTSTEP_PARTICLES.getBooleanValue())
+            cir.setReturnValue(false);
     }
 }

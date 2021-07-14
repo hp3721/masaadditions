@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.Slice;
 @Pseudo
 @Mixin(targets = {"carpet.helpers.OptimizedExplosion"}, remap = false)
 public class MixinExplosionCarpet {
+    @SuppressWarnings("UnresolvedMixinReference")
     @Redirect(method = "doExplosionB",
             slice = @Slice(to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/explosion/Explosion;getAffectedBlocks()Ljava/util/List;", ordinal = 1, remap = true)),

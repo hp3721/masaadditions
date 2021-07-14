@@ -16,12 +16,19 @@ import fi.dy.masa.malilib.util.StringUtils;
 import fi.dy.masa.tweakeroo.Tweakeroo;
 
 public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean> {
+    TWEAK_ALWAYS_RENDER_BARRIER_PARTICLES("tweakAlwaysRenderBarrierParticles", false, "", "Barrier block particles will always be rendered regardless of\nthe player's current gamemode and held item if enabled."),
     TWEAK_BLOCK_BREAKING_PARTICLES("tweakBlockBreakingParticleTweaks", false, "", "Allows tweaking the block breaking particles, such as reducing the number\nof particles produced per block broken.\nSet the limit in Generic -> 'Block Breaking Particle Limit'.\nPorted from 1.12 Tweakeroo."),
-    TWEAK_PERIMETER_WALL_DIG_HELPER("tweakPerimeterWallDigHelper", false, "", "Prevents player from mining underneath the block types\nspecified in the Perimeter Outline Blocks list."),
+    TWEAK_FORCE_SWAP_GEAR("tweakForceSwapGear", false, "", "Allows the player to equip an armor piece in their main hand by\nright clicking while sneaking even if the player already has\narmor in the respective armor slot. This also works with elytras."),
     TWEAK_INSANE_BLOCK_BREAKING_PARTICLES("tweakInsaneBlockBreakingParticles", false, "", "Changes block breaking particles to have no gravity and increased velocity.\nThis feature is originally from UsefulMod by nessie."),
-    TWEAK_ONE_HIT_KILL("tweakOneHitKill", false, "", "Enables one hit killing attacked living entities if player is in creative.\nRequires operator permission to use /kill."),
     TWEAK_ITEM_NAME_COPY("tweakItemNameCopy", false, "", "Sets item name in anvil to string stored in clipboard."),
-    TWEAK_RESPAWN_ON_DEATH("tweakRespawnOnDeath", false, "", "Enables automatic respawning on death.\nThis feature is originally from UsefulMod by nessie.");
+    TWEAK_LLAMA_STEERING("tweakLlamaSteering", false, "", "Allows the player to control Llamas while riding them.\nPorted from 1.12 Tweakeroo."),
+    TWEAK_ONE_HIT_KILL("tweakOneHitKill", false, "", "Enables one hit killing attacked living entities if player is in creative.\nRequires operator permission to use /kill."),
+    TWEAK_OVERRIDE_WINDOW_TITLE("tweakOverrideWindowTitle", false, "", "Replaces the current window title with the string\nspecified in the Window Title Override generic config."),
+    TWEAK_PERIMETER_WALL_DIG_HELPER("tweakPerimeterWallDigHelper", false, "", "Prevents player from mining underneath the block types\nspecified in the Perimeter Outline Blocks list."),
+    TWEAK_PREVENT_ATTACK_ENTITIES("tweakPreventAttackEntities", false, "", "Prevents player from attacking entities with the entity types\nspecified in the Prevent Attack Entities list."),
+    TWEAK_RAINBOW_LEAVES("tweakRainbowLeaves", false, "", "Makes leaves more colorful.\nThis feature is originally from UsefulMod by nessie."),
+    TWEAK_RESPAWN_ON_DEATH("tweakRespawnOnDeath", false, "", "Enables automatic respawning on death.\nThis feature is originally from UsefulMod by nessie."),
+    TWEAK_OVERRIDE_SKY_TIME("tweakOverrideSkyTime", false, "", "Overrides the day time used for rendering the sky.\nInspired by tweakDayCycleOverride in Tweakfork by Andrews54757.\nAllows you to see the actual time through mods such as MiniHUD\nor using the Clock item unlike tweakDayCycleOverride.");
 
     private final String name;
     private final String comment;
@@ -32,31 +39,31 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
     private boolean valueBoolean;
     private IValueChangeCallback<IConfigBoolean> callback;
 
-    private FeatureToggleExtended(String name, boolean defaultValue, String defaultHotkey, String comment) {
+    FeatureToggleExtended(String name, boolean defaultValue, String defaultHotkey, String comment) {
         this(name, defaultValue, false, defaultHotkey, KeybindSettings.DEFAULT, comment);
     }
 
-    private FeatureToggleExtended(String name, boolean defaultValue, boolean singlePlayer, String defaultHotkey, String comment) {
+    FeatureToggleExtended(String name, boolean defaultValue, boolean singlePlayer, String defaultHotkey, String comment) {
         this(name, defaultValue, singlePlayer, defaultHotkey, KeybindSettings.DEFAULT, comment);
     }
 
-    private FeatureToggleExtended(String name, boolean defaultValue, String defaultHotkey, KeybindSettings settings, String comment) {
+    FeatureToggleExtended(String name, boolean defaultValue, String defaultHotkey, KeybindSettings settings, String comment) {
         this(name, defaultValue, false, defaultHotkey, settings, comment);
     }
 
-    private FeatureToggleExtended(String name, boolean defaultValue, boolean singlePlayer, String defaultHotkey, KeybindSettings settings, String comment) {
+    FeatureToggleExtended(String name, boolean defaultValue, boolean singlePlayer, String defaultHotkey, KeybindSettings settings, String comment) {
         this(name, defaultValue, singlePlayer, defaultHotkey, settings, comment, StringUtils.splitCamelCase(name.substring(5)));
     }
 
-    private FeatureToggleExtended(String name, boolean defaultValue, String defaultHotkey, String comment, String prettyName) {
+    FeatureToggleExtended(String name, boolean defaultValue, String defaultHotkey, String comment, String prettyName) {
         this(name, defaultValue, false, defaultHotkey, comment, prettyName);
     }
 
-    private FeatureToggleExtended(String name, boolean defaultValue, boolean singlePlayer, String defaultHotkey, String comment, String prettyName) {
+    FeatureToggleExtended(String name, boolean defaultValue, boolean singlePlayer, String defaultHotkey, String comment, String prettyName) {
         this(name, defaultValue, singlePlayer, defaultHotkey, KeybindSettings.DEFAULT, comment, prettyName);
     }
 
-    private FeatureToggleExtended(String name, boolean defaultValue, boolean singlePlayer, String defaultHotkey, KeybindSettings settings, String comment, String prettyName) {
+    FeatureToggleExtended(String name, boolean defaultValue, boolean singlePlayer, String defaultHotkey, KeybindSettings settings, String comment, String prettyName) {
         this.name = name;
         this.valueBoolean = defaultValue;
         this.defaultValueBoolean = defaultValue;

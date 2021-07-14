@@ -1,4 +1,5 @@
 {
   "masaadditions.gui.title.save_dragged_schematic": "储存拖入的原理图文件",
-  "masaadditions.gui.button.open_schematics_folder": "打开原理图文件夹"
+  "masaadditions.gui.button.open_schematics_folder": "打开原理图文件夹",
+  "masaadditions.message.fast_right_click_disabled": "停用disableFarmlandMaking 以使用tweakFastRightClick !"
 }

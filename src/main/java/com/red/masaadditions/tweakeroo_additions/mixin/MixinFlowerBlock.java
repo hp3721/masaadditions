@@ -13,7 +13,8 @@ public class MixinFlowerBlock {
     // From UsefulMod by nessie
     @Inject(method = "getOffsetType", at = @At("HEAD"), cancellable = true)
     private void getOffsetType(CallbackInfoReturnable<AbstractBlock.OffsetType> cir) {
-        if (ConfigsExtended.Disable.DISABLE_FLOWER_BLOCK_MODEL_OFFSET.getBooleanValue())
+        if (ConfigsExtended.Disable.DISABLE_PLANT_BLOCK_MODEL_OFFSET.getBooleanValue()) {
             cir.setReturnValue(AbstractBlock.OffsetType.NONE);
+        }
     }
 }

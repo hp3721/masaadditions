@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = RenderContainer.class, remap = false)
 public abstract class MixinRenderContainer {
     @Shadow
-    abstract void addRenderer(OverlayRendererBase renderer);
+    protected abstract void addRenderer(OverlayRendererBase renderer);
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void RenderContainer(CallbackInfo ci) {

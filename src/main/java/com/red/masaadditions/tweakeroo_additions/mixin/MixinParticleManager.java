@@ -1,5 +1,6 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
+import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import com.red.masaadditions.tweakeroo_additions.util.MiscUtils;
 import fi.dy.masa.tweakeroo.config.Configs;
@@ -20,8 +21,11 @@ import java.util.Random;
 
 @Mixin(ParticleManager.class)
 public class MixinParticleManager {
-    @Shadow protected ClientWorld world;
-    @Shadow @Final private Random random;
+    @Shadow
+    protected ClientWorld world;
+    @Shadow
+    @Final
+    private Random random;
 
     // From 1.12 Tweakeroo by Masa
     @Inject(method = "addBlockBreakParticles", at = @At("HEAD"), cancellable = true)
@@ -34,7 +38,7 @@ public class MixinParticleManager {
 
     @Inject(method = "addBlockBreakingParticles", at = @At("HEAD"), cancellable = true)
     private void onAddBlockDestroyEffects2(BlockPos pos, Direction direction, CallbackInfo ci) {
-        if (Configs.Disable.DISABLE_BLOCK_BREAK_PARTICLES.getBooleanValue()) {
+        if (ConfigsExtended.Disable.DISABLE_BLOCK_ATTACKED_PARTICLES.getBooleanValue()) {
             ci.cancel();
         }
     }

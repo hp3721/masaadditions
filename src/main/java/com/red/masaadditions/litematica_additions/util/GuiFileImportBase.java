@@ -9,7 +9,6 @@ import fi.dy.masa.malilib.gui.Message;
 import fi.dy.masa.malilib.gui.button.ButtonGeneric;
 import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import fi.dy.masa.malilib.gui.interfaces.ISelectionListener;
-import fi.dy.masa.malilib.gui.widgets.WidgetCheckBox;
 import fi.dy.masa.malilib.gui.widgets.WidgetFileBrowserBase;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.KeyCodes;
@@ -24,8 +23,7 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     protected String defaultText = "";
     protected final LitematicaSchematic schematic;
 
-    public GuiFileImportBase(LitematicaSchematic schematic)
-    {
+    public GuiFileImportBase(LitematicaSchematic schematic) {
         super(10, 70);
 
         this.schematic = schematic;
@@ -36,20 +34,12 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public int getBrowserHeight()
-    {
+    public int getBrowserHeight() {
         return this.height - 80;
     }
 
     @Override
-    public int getMaxInfoHeight()
-    {
-        return super.getMaxInfoHeight();
-    }
-
-    @Override
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
 
         boolean focused = this.textField.isFocused();
@@ -64,44 +54,32 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
 
         // Only set the text field contents if it hasn't been set already.
         // This prevents overwriting any user input text when switching to a newly created directory.
-        if (this.lastText.isEmpty())
-        {
-            if (entry != null && entry.getType() != WidgetFileBrowserBase.DirectoryEntryType.DIRECTORY && entry.getType() != WidgetFileBrowserBase.DirectoryEntryType.INVALID)
-            {
+        if (this.lastText.isEmpty()) {
+            if (entry != null && entry.getType() != WidgetFileBrowserBase.DirectoryEntryType.DIRECTORY && entry.getType() != WidgetFileBrowserBase.DirectoryEntryType.INVALID) {
                 this.setTextFieldText(FileUtils.getNameWithoutExtension(entry.getName()));
-            }
-            else if (this.schematic != null)
-            {
+            } else if (this.schematic != null) {
                 this.setTextFieldText(this.schematic.getMetadata().getName());
-            }
-            else
-            {
+            } else {
                 this.setTextFieldText(this.defaultText);
             }
         }
 
-        int x = this.textField.getX() + this.textField.getWidth() + 12;
-        int y = 32;
-
-        x = this.createButton(x, y);
+        this.createButton(this.textField.getX() + this.textField.getWidth() + 12, 32);
     }
 
-    protected void setTextFieldText(String text)
-    {
+    protected void setTextFieldText(String text) {
         this.lastText = text;
         this.textField.setText(text);
         this.textField.setCursorPositionEnd();
     }
 
-    protected String getTextFieldText()
-    {
+    protected String getTextFieldText() {
         return this.textField.getText();
     }
 
     protected abstract IButtonActionListener createButtonListener(GuiSchematicSaveBase.ButtonType type);
 
-    private int createButton(int x, int y)
-    {
+    private int createButton(int x, int y) {
         String label = StringUtils.translate(GuiSchematicSave.ButtonType.SAVE.getLabelKey());
         int width = this.getStringWidth(label) + 10;
         ButtonGeneric button = new ButtonGeneric(x, y, width, 20, label, "litematica.gui.label.schematic_save.hoverinfo.hold_shift_to_overwrite");
@@ -110,40 +88,33 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public void setString(String string)
-    {
+    public void setString(String string) {
         this.setNextMessageType(Message.MessageType.ERROR);
         super.setString(string);
     }
 
     @Override
-    public void drawContents(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
-    {
+    public void drawContents(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         super.drawContents(matrixStack, mouseX, mouseY, partialTicks);
 
         this.textField.render(matrixStack, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    public void onSelectionChange(@Nullable WidgetFileBrowserBase.DirectoryEntry entry)
-    {
-        if (entry != null && entry.getType() != WidgetFileBrowserBase.DirectoryEntryType.DIRECTORY && entry.getType() != WidgetFileBrowserBase.DirectoryEntryType.INVALID)
-        {
+    public void onSelectionChange(@Nullable WidgetFileBrowserBase.DirectoryEntry entry) {
+        if (entry != null && entry.getType() != WidgetFileBrowserBase.DirectoryEntryType.DIRECTORY && entry.getType() != WidgetFileBrowserBase.DirectoryEntryType.INVALID) {
             this.setTextFieldText(FileUtils.getNameWithoutExtension(entry.getName()));
         }
     }
 
     @Override
-    protected ISelectionListener<WidgetFileBrowserBase.DirectoryEntry> getSelectionListener()
-    {
+    protected ISelectionListener<WidgetFileBrowserBase.DirectoryEntry> getSelectionListener() {
         return this;
     }
 
     @Override
-    public boolean onMouseClicked(int mouseX, int mouseY, int mouseButton)
-    {
-        if (this.textField.mouseClicked(mouseX, mouseY, mouseButton))
-        {
+    public boolean onMouseClicked(int mouseX, int mouseY, int mouseButton) {
+        if (this.textField.mouseClicked(mouseX, mouseY, mouseButton)) {
             return true;
         }
 
@@ -151,16 +122,12 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public boolean onKeyTyped(int keyCode, int scanCode, int modifiers)
-    {
-        if (this.textField.keyPressed(keyCode, scanCode, modifiers))
-        {
+    public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
+        if (this.textField.keyPressed(keyCode, scanCode, modifiers)) {
             this.getListWidget().clearSelection();
             return true;
-        }
-        else if (keyCode == KeyCodes.KEY_TAB)
-        {
-            this.textField.setFocused(! this.textField.isFocused());
+        } else if (keyCode == KeyCodes.KEY_TAB) {
+            this.textField.setFocused(!this.textField.isFocused());
             return true;
         }
 
@@ -168,10 +135,8 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public boolean onCharTyped(char charIn, int modifiers)
-    {
-        if (this.textField.charTyped(charIn, modifiers))
-        {
+    public boolean onCharTyped(char charIn, int modifiers) {
+        if (this.textField.charTyped(charIn, modifiers)) {
             this.getListWidget().clearSelection();
             return true;
         }

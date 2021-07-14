@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlacementTweaks {
-    public static final ArrayList<Block> PERIMETER_OUTLINE_BLOCKS = new ArrayList<Block>();
+    public static final ArrayList<Block> PERIMETER_OUTLINE_BLOCKS = new ArrayList<>();
 
     public static boolean onProcessLeftClickBlock(BlockPos pos) {
         PlayerEntity player = MinecraftClient.getInstance().player;

@@ -13,8 +13,11 @@
     "MixinGenericConfigs",
     "MixinGuiConfigs",
     "MixinHotkeys",
+    "MixinInitializationHandler",
     "MixinInputHandler",
+    "MixinInternalConfigs",
     "MixinListsConfigs",
+    "MixinMiscTweaks",
     "MixinPlacementTweaks"
   ],
   "injectors": {

@@ -77,11 +77,7 @@ public class OverlayRendererBeaconRange extends OverlayRendererBase {
 
     @Override
     public boolean needsUpdate(Entity entity, MinecraftClient mc) {
-        if (needsUpdate || this.lastUpdatePos == null) {
-            return true;
-        }
-
-        return false;
+        return needsUpdate || this.lastUpdatePos == null;
     }
 
     @Override
@@ -204,7 +200,6 @@ public class OverlayRendererBeaconRange extends OverlayRendererBase {
 
         if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BeaconBlock) {
             renderBeaconBoxForPlayer(player, dx, dy, dz, partialTicks);
-            return;
         }
     }
 

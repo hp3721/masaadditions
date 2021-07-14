@@ -14,87 +14,64 @@ import fi.dy.masa.malilib.util.StringUtils;
 import java.io.File;
 
 public class GuiFileImport extends GuiFileImportBase implements ICompletionListener {
-    public GuiFileImport(LitematicaSchematic schematic)
-    {
+    public GuiFileImport(LitematicaSchematic schematic) {
         super(schematic);
 
         this.title = StringUtils.translate("masaadditions.gui.title.save_dragged_schematic");
     }
 
     @Override
-    public String getBrowserContext()
-    {
+    public String getBrowserContext() {
         return "schematic_save";
     }
 
     @Override
-    public File getDefaultDirectory()
-    {
+    public File getDefaultDirectory() {
         return DataManager.getSchematicsBaseDirectory();
     }
 
     @Override
-    protected IButtonActionListener createButtonListener(GuiSchematicSaveBase.ButtonType type)
-    {
+    protected IButtonActionListener createButtonListener(GuiSchematicSaveBase.ButtonType type) {
         return new GuiFileImport.ButtonListener(type, this);
     }
 
     @Override
-    public void onTaskCompleted()
-    {
-        if (this.mc.isOnThread())
-        {
+    public void onTaskCompleted() {
+        if (this.mc.isOnThread()) {
             this.refreshList();
-        }
-        else
-        {
-            this.mc.execute(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    GuiFileImport.this.refreshList();
-                }
-            });
+        } else {
+            this.mc.execute(GuiFileImport.this::refreshList);
         }
     }
 
-    private void refreshList()
-    {
-        if (GuiUtils.getCurrentScreen() == this)
-        {
+    private void refreshList() {
+        if (GuiUtils.getCurrentScreen() == this) {
             this.getListWidget().refreshEntries();
             this.getListWidget().clearSchematicMetadataCache();
         }
     }
 
-    private static class ButtonListener implements IButtonActionListener
-    {
+    private static class ButtonListener implements IButtonActionListener {
         private final GuiFileImport gui;
         private final GuiSchematicSaveBase.ButtonType type;
 
-        public ButtonListener(GuiSchematicSaveBase.ButtonType type, GuiFileImport gui)
-        {
+        public ButtonListener(GuiSchematicSaveBase.ButtonType type, GuiFileImport gui) {
             this.type = type;
             this.gui = gui;
         }
 
         @Override
-        public void actionPerformedWithButton(ButtonBase button, int mouseButton)
-        {
-            if (this.type == GuiSchematicSaveBase.ButtonType.SAVE)
-            {
+        public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
+            if (this.type == GuiSchematicSaveBase.ButtonType.SAVE) {
                 File dir = this.gui.getListWidget().getCurrentDirectory();
                 String fileName = this.gui.getTextFieldText();
 
-                if (!dir.isDirectory())
-                {
+                if (!dir.isDirectory()) {
                     this.gui.addMessage(Message.MessageType.ERROR, "litematica.error.schematic_save.invalid_directory", dir.getAbsolutePath());
                     return;
                 }
 
-                if (fileName.isEmpty())
-                {
+                if (fileName.isEmpty()) {
                     this.gui.addMessage(Message.MessageType.ERROR, "litematica.error.schematic_save.invalid_schematic_name", fileName);
                     return;
                 }
@@ -102,8 +79,7 @@ public class GuiFileImport extends GuiFileImportBase implements ICompletionListe
                 LitematicaSchematic schematic = this.gui.schematic;
                 schematic.getMetadata().setTimeModified(System.currentTimeMillis());
 
-                if (schematic.writeToFile(dir, fileName, GuiBase.isShiftDown()))
-                {
+                if (schematic.writeToFile(dir, fileName, GuiBase.isShiftDown())) {
                     this.gui.addMessage(Message.MessageType.SUCCESS, "litematica.message.schematic_saved_as", fileName);
                     this.gui.getListWidget().refreshEntries();
                 }

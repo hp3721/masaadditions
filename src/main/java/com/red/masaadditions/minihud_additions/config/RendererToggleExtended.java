@@ -114,7 +114,7 @@ public enum RendererToggleExtended implements IHotkeyTogglable, IConfigNotifiabl
 
     @Override
     public boolean isModified(String newValue) {
-        return String.valueOf(this.defaultValueBoolean).equals(newValue) == false;
+        return !String.valueOf(this.defaultValueBoolean).equals(newValue);
     }
 
     @Override
