@@ -1,6 +1,5 @@
 package com.red.masaadditions.tweakeroo_additions.tweakeroo_mixin;
 
-import com.red.masaadditions.MasaAdditions;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.util.MiscUtils;
 import fi.dy.masa.malilib.util.GuiUtils;
@@ -39,8 +38,7 @@ public class MixinPlacementTweaks {
     private static void onTick(CallbackInfo ci) {
         MinecraftClient mc = MinecraftClient.getInstance();
 
-        if (mc.player != null && ConfigsExtended.Generic.HAND_RESTOCK_CONTINUOUS.getBooleanValue() && GuiUtils.getCurrentScreen() == null)
-        {
+        if (mc.player != null && ConfigsExtended.Generic.HAND_RESTOCK_CONTINUOUS.getBooleanValue() && GuiUtils.getCurrentScreen() == null) {
             InventoryUtils.preRestockHand(mc.player, Hand.MAIN_HAND, true);
             InventoryUtils.preRestockHand(mc.player, Hand.OFF_HAND, true);
         }

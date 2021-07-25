@@ -1,7 +1,6 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;

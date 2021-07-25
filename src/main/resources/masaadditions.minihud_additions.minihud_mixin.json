@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.red.masaadditions.minihud_additions.minihud_mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_16",
   "plugin": "com.red.masaadditions.minihud_additions.minihud_mixin.MixinPlugin",
   "mixins": [
     "MixinColorConfigs",
@@ -11,7 +11,6 @@
     "MixinGuiConfigs",
     "MixinInputHandler",
     "MixinKeyCallbacks",
-    "MixinOverlayRenderer",
     "MixinRenderContainer"
   ],
   "injectors": {

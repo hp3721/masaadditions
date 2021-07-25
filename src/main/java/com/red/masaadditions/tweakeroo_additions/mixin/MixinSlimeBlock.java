@@ -1,6 +1,7 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SlimeBlock;
 import net.minecraft.block.TransparentBlock;
 import net.minecraft.entity.Entity;
@@ -27,10 +28,10 @@ public class MixinSlimeBlock extends TransparentBlock {
         }
     }
 
-    @Inject(method = "onLandedUpon", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;handleFallDamage(FF)Z"), cancellable = true)
-    private void handleFallDamage(World world, BlockPos pos, Entity entity, float distance, CallbackInfo ci) {
+    @Inject(method = "onLandedUpon", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z"), cancellable = true)
+    private void handleFallDamage(World world, BlockState state, BlockPos pos, Entity entity, float distance, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_SLIME_BLOCK_BOUNCING.getBooleanValue() && entity instanceof PlayerEntity) {
-            super.onLandedUpon(world, pos, entity, distance);
+            super.onLandedUpon(world, state, pos, entity, distance);
             ci.cancel();
         }
     }

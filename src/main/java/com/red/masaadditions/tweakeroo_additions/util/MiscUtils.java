@@ -27,8 +27,7 @@ public class MiscUtils {
                 double speedY = (0.5 - rand.nextDouble());
                 double speedZ = (0.5 - rand.nextDouble());
 
-                manager.addParticle((new BlockDustParticleExt(world, x, y, z, speedX, speedY, speedZ, state))
-                        .setBlockPos(pos)
+                manager.addParticle((new BlockDustParticleExt(world, x, y, z, speedX, speedY, speedZ, state, pos))
                         .move((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SPEED.getDoubleValue())
                         .scale((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SCALE.getDoubleValue()));
             }
@@ -48,13 +47,11 @@ public class MiscUtils {
     }
 
     public static boolean isTillableBlock(Block block) {
-        return block instanceof GrassBlock || block instanceof GrassPathBlock || block.is(Blocks.DIRT);
+        return block instanceof GrassBlock || block instanceof DirtPathBlock || block == Blocks.DIRT;
     }
 
-    public static int getSlotNumberForEquipmentSlot(EquipmentSlot type)
-    {
-        switch (type)
-        {
+    public static int getSlotNumberForEquipmentSlot(EquipmentSlot type) {
+        switch (type) {
             case HEAD:
                 return 5;
             case CHEST:

@@ -40,7 +40,7 @@ public class Callbacks {
         }
 
         private void blinkDriveTeleport(boolean maintainY) {
-            if (this.mc.player.abilities.creativeMode) {
+            if (this.mc.player.isCreative()) {
                 Entity entity = fi.dy.masa.malilib.util.EntityUtils.getCameraEntity();
                 HitResult trace = RayTraceUtils.getRayTraceFromEntity(this.mc.world, entity, true, this.mc.options.viewDistance * 16 + 200);
 
@@ -88,30 +88,25 @@ public class Callbacks {
         }
     }
 
-    public static class FeatureCallbackHoney implements IValueChangeCallback<ConfigBoolean>
-    {
-        public FeatureCallbackHoney(ConfigBoolean feature)
-        {
+    public static class FeatureCallbackHoney implements IValueChangeCallback<ConfigBoolean> {
+        public FeatureCallbackHoney(ConfigBoolean feature) {
             if (feature.equals(ConfigsExtended.Disable.DISABLE_HONEY_BLOCK_SLOWDOWN)) {
                 ConfigsExtended.Internal.HONEY_BLOCK_VELOCITY_MULTIPLIER_ORIGINAL.setDoubleValue(Blocks.HONEY_BLOCK.getVelocityMultiplier());
 
-                if (feature.getBooleanValue())
-                {
+                if (feature.getBooleanValue()) {
                     ((MixinAbstractBlockAccessor) Blocks.HONEY_BLOCK).setVelocityMultiplier(Blocks.STONE.getVelocityMultiplier());
                 }
             } else {
                 ConfigsExtended.Internal.HONEY_BLOCK_JUMP_VELOCITY_MULTIPLIER_ORIGINAL.setDoubleValue(Blocks.HONEY_BLOCK.getJumpVelocityMultiplier());
 
-                if (!feature.getBooleanValue())
-                {
+                if (!feature.getBooleanValue()) {
                     ((MixinAbstractBlockAccessor) Blocks.HONEY_BLOCK).setJumpVelocityMultiplier(Blocks.STONE.getJumpVelocityMultiplier());
                 }
             }
         }
 
         @Override
-        public void onValueChanged(ConfigBoolean config)
-        {
+        public void onValueChanged(ConfigBoolean config) {
             if (config.equals(ConfigsExtended.Disable.DISABLE_HONEY_BLOCK_SLOWDOWN)) {
                 if (config.getBooleanValue()) {
                     ((MixinAbstractBlockAccessor) Blocks.HONEY_BLOCK).setVelocityMultiplier(Blocks.STONE.getVelocityMultiplier());
