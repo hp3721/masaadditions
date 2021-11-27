@@ -21,8 +21,8 @@ repositories {
     maven { url "https://masa.dy.fi/maven" }
 }
 
-minecraft {
-    accessWidener = file("src/main/resources/masaadditions.aw")
+loom {
+    accessWidenerPath = file("src/main/resources/masaadditions.aw")
 }
 
 dependencies {
