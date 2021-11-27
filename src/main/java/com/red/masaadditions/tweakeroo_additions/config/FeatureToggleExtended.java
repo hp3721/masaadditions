@@ -16,6 +16,7 @@ import fi.dy.masa.malilib.util.StringUtils;
 import fi.dy.masa.tweakeroo.Tweakeroo;
 
 public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean> {
+    TWEAK_ALWAYS_RENDER_BARRIER_PARTICLES("tweakAlwaysRenderBarrierParticles", false, "", "Barrier block particles will always be rendered regardless of\nthe player's current gamemode and held item if enabled."),
     TWEAK_BLOCK_BREAKING_PARTICLES("tweakBlockBreakingParticleTweaks", false, "", "Allows tweaking the block breaking particles, such as reducing the number\nof particles produced per block broken.\nSet the limit in Generic -> 'Block Breaking Particle Limit'.\nPorted from 1.12 Tweakeroo."),
     TWEAK_FORCE_SWAP_GEAR("tweakForceSwapGear", false, "", "Allows the player to equip an armor piece in their main hand by\nright clicking while sneaking even if the player already has\narmor in the respective armor slot. This also works with elytras."),
     TWEAK_INSANE_BLOCK_BREAKING_PARTICLES("tweakInsaneBlockBreakingParticles", false, "", "Changes block breaking particles to have no gravity and increased velocity.\nThis feature is originally from UsefulMod by nessie."),

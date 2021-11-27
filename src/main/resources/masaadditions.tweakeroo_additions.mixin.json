@@ -16,6 +16,7 @@
     "MixinClientPlayerEntity",
     "MixinClientPlayerInteractionManager",
     "MixinClientPlayNetworkHandler",
+    "MixinClientWorld",
     "MixinDimensionEffects",
     "MixinFlowerBlock",
     "MixinHorseBaseEntity",
