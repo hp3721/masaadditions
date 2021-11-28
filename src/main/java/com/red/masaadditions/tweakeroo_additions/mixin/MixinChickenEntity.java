@@ -20,6 +20,6 @@ public abstract class MixinChickenEntity extends AnimalEntity {
     @Inject(method = "tickMovement", at = @At("RETURN"))
     private void derpyChicken(CallbackInfo ci) {
         if (ConfigsExtended.Generic.DERPY_CHICKEN.getBooleanValue())
-            this.pitch = -90F;
+            this.setPitch(-90F);
     }
 }

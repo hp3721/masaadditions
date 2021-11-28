@@ -93,8 +93,8 @@ public class ConfigsExtended {
     }
 
     public static class Internal {
-        public static final ConfigDouble        HONEY_BLOCK_VELOCITY_MULTIPLIER_ORIGINAL   = new ConfigDouble("honeyBlockVelocityMultiplierOriginal", 0.4, 0, 1, "The original velocity value of Honey Blocks");
-        public static final ConfigDouble        HONEY_BLOCK_JUMP_VELOCITY_MULTIPLIER_ORIGINAL   = new ConfigDouble("honeyBlockJumpVelocityMultiplierOriginal", 0.5, 0, 1, "The original jump velocity value of Honey Blocks");
+        public static final ConfigDouble HONEY_BLOCK_VELOCITY_MULTIPLIER_ORIGINAL = new ConfigDouble("honeyBlockVelocityMultiplierOriginal", 0.4, 0, 1, "The original velocity value of Honey Blocks");
+        public static final ConfigDouble HONEY_BLOCK_JUMP_VELOCITY_MULTIPLIER_ORIGINAL = new ConfigDouble("honeyBlockJumpVelocityMultiplierOriginal", 0.5, 0, 1, "The original jump velocity value of Honey Blocks");
 
         public static final ImmutableList<IConfigBase> ADDITIONAL_OPTIONS = ImmutableList.of(
                 HONEY_BLOCK_VELOCITY_MULTIPLIER_ORIGINAL,

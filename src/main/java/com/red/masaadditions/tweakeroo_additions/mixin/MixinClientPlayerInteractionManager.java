@@ -1,6 +1,5 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
-import com.red.masaadditions.MasaAdditions;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import com.red.masaadditions.tweakeroo_additions.tweaks.PlacementTweaks;
@@ -26,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = ClientPlayerInteractionManager.class)
+@Mixin(ClientPlayerInteractionManager.class)
 public class MixinClientPlayerInteractionManager {
     @Unique
     float attackedBlockHardness;
@@ -68,7 +67,7 @@ public class MixinClientPlayerInteractionManager {
 
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;attack(Lnet/minecraft/entity/Entity;)V"), cancellable = true)
     private void onAttackEntity1(PlayerEntity player, Entity target, CallbackInfo ci) {
-        if (FeatureToggleExtended.TWEAK_ONE_HIT_KILL.getBooleanValue() && player.abilities.creativeMode && target instanceof LivingEntity && ((LivingEntity) target).getHealth() > 0f) {
+        if (FeatureToggleExtended.TWEAK_ONE_HIT_KILL.getBooleanValue() && player.isCreative() && target instanceof LivingEntity && ((LivingEntity) target).getHealth() > 0f) {
             ((ClientPlayerEntity) player).sendChatMessage(String.format("/kill %s", target.getUuidAsString()));
         }
     }

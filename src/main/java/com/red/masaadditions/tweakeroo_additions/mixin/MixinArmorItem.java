@@ -28,7 +28,7 @@ public class MixinArmorItem {
             return;
         }
 
-        mc.interactionManager.clickSlot(user.playerScreenHandler.syncId, MiscUtils.getSlotNumberForEquipmentSlot(MobEntity.getPreferredEquipmentSlot(itemStack)), user.inventory.selectedSlot, SlotActionType.SWAP, user);
+        mc.interactionManager.clickSlot(user.playerScreenHandler.syncId, MiscUtils.getSlotNumberForEquipmentSlot(MobEntity.getPreferredEquipmentSlot(itemStack)), user.getInventory().selectedSlot, SlotActionType.SWAP, user);
         cir.setReturnValue(TypedActionResult.success(itemStack, world.isClient()));
     }
 }

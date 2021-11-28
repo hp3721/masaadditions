@@ -25,6 +25,7 @@
     "masaadditions.minihud_additions.mixin.json",
     "masaadditions.litematica_additions.litematica_mixin.json"
   ],
+  "accessWidener" : "masaadditions.aw",
   "depends": {
   },
   "suggests": {

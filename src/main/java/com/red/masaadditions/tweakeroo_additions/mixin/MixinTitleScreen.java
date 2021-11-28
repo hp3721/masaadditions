@@ -6,8 +6,7 @@ import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(TitleScreen.class)
 public class MixinTitleScreen extends Screen {
@@ -15,10 +14,8 @@ public class MixinTitleScreen extends Screen {
         super(title);
     }
 
-    @Inject(method = "initWidgetsNormal", at = @At(value = "RETURN"))
-    private void disableRealmsButton(int y, int spacingY, CallbackInfo ci) {
-        if (ConfigsExtended.Disable.DISABLE_REALMS_BUTTON.getBooleanValue()) {
-            this.buttons.get(2).active = false;
-        }
+    @ModifyVariable(method = "initWidgetsNormal", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;addDrawableChild(Lnet/minecraft/client/gui/Element;)Lnet/minecraft/client/gui/Element;", ordinal = 2))
+    private boolean disableRealmsButton(boolean bl) {
+        return !ConfigsExtended.Disable.DISABLE_REALMS_BUTTON.getBooleanValue() && bl;
     }
 }

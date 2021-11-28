@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(targets = "net.minecraft.client.item.ModelPredicateProviderRegistry$1")
 public class MixinModelPredicateProviderRegistry {
-    @Redirect(method = "call(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/entity/LivingEntity;)F", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getSkyAngle(F)F"))
+    @Redirect(method = "Lnet/minecraft/client/item/ModelPredicateProviderRegistry$1;unclampedCall(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/entity/LivingEntity;I)F", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getSkyAngle(F)F"))
     private float getSkyAngle(ClientWorld clientWorld, float tickDelta) {
         return clientWorld.getDimension().getSkyAngle(clientWorld.getLevelProperties().getTimeOfDay());
     }

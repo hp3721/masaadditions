@@ -12,8 +12,7 @@ import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 import fi.dy.masa.malilib.interfaces.IValueChangeCallback;
 import fi.dy.masa.minihud.MiniHUD;
 import fi.dy.masa.minihud.hotkeys.KeyCallbackToggleRenderer;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public enum RendererToggleExtended implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean> {
     OVERLAY_BEACON_RANGE("overlayBeaconRange", "", "Toggles the Beacon Range overlay renderer.\nPorted from 1.12 MiniHUD", "Beacon Range overlay");
