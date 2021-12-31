@@ -12,6 +12,7 @@
     "MixinBlockColors",
     "MixinBlockDustParticle",
     "MixinBossBarHud",
+    "MixinChestBlockEntityRenderer",
     "MixinChickenEntity",
     "MixinClientPlayerEntity",
     "MixinClientPlayerInteractionManager",

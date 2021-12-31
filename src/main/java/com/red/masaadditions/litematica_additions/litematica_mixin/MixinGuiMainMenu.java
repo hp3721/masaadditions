@@ -16,15 +16,10 @@ public abstract class MixinGuiMainMenu extends GuiBase {
     @Shadow
     protected abstract int getButtonWidth();
 
-    @ModifyArg(method = "initGui", at = @At(value = "INVOKE", target = "Lfi/dy/masa/litematica/gui/GuiMainMenu;createChangeMenuButton(IIILfi/dy/masa/litematica/gui/GuiMainMenu$ButtonListenerChangeMenu$ButtonType;)V", ordinal = 6), index = 1)
-    private int createSchematicManagerButton(int y) {
-        return y - 22;
-    }
-
     @Inject(method = "initGui", at = @At("RETURN"))
     private void initGui(CallbackInfo ci) {
         int width = this.getButtonWidth();
-        ButtonGeneric button = new ButtonGeneric(width + 32, 74, width, 20, "Open Schematics Folder");
+        ButtonGeneric button = new ButtonGeneric(width + 32, 52, width, 20, "Open Schematics Folder");
         this.addButton(button, new MiscUtils.ButtonListenerOpenFolder());
     }
 }

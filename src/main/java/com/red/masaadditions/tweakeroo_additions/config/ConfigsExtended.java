@@ -55,6 +55,7 @@ public class ConfigsExtended {
         public static final ConfigBooleanHotkeyed DISABLE_BED_EXPLOSIONS = new ConfigBooleanHotkeyed("disableBedExplosions", false, "", "Prevents player from using beds while in the Nether or End\nwhich would cause the bed to explode.");
         public static final ConfigBooleanHotkeyed DISABLE_BLOCK_ATTACKED_PARTICLES = new ConfigBooleanHotkeyed("disableBlockAttackedParticles", false, "", "Removes block particles that are rendered on sides of blocks when attacked.");
         public static final ConfigBooleanHotkeyed DISABLE_BOSS_BAR_RENDERING = new ConfigBooleanHotkeyed("disableBossBarRendering", false, "", "Disables rendering of boss bars.");
+        public static final ConfigBooleanHotkeyed DISABLE_CHRISTMAS_CHESTS = new ConfigBooleanHotkeyed("disableChristmasChests", false, "", "Disables the Christmas texture for chests.");
         public static final ConfigBooleanHotkeyed DISABLE_DRAGON_EGG_TELEPORTING = new ConfigBooleanHotkeyed("disableDragonEggTeleporting", false, "", "Prevents player from attacking (outside of creative mode)\nor using dragon eggs while not shifting.");
         public static final ConfigBooleanHotkeyed DISABLE_FARMLAND_MAKING = new ConfigBooleanHotkeyed("disableFarmlandMaking", false, "", "Disables making farmland with a hoe.\nFast right click is disabled while this is enabled.");
         public static final ConfigBooleanHotkeyed DISABLE_FOOTSTEP_PARTICLES = new ConfigBooleanHotkeyed("disableFootstepParticles", false, "", "Removes players' footstep particles.");
@@ -75,6 +76,7 @@ public class ConfigsExtended {
                 DISABLE_BED_EXPLOSIONS,
                 DISABLE_BLOCK_ATTACKED_PARTICLES,
                 DISABLE_BOSS_BAR_RENDERING,
+                DISABLE_CHRISTMAS_CHESTS,
                 DISABLE_DRAGON_EGG_TELEPORTING,
                 DISABLE_FARMLAND_MAKING,
                 DISABLE_FOOTSTEP_PARTICLES,
