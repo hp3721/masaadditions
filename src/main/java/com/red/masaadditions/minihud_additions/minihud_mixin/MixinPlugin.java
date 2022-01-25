@@ -12,8 +12,7 @@ import java.util.Set;
 public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        // return FabricLoader.getInstance().isModLoaded("minihud");
-        return false;
+        return FabricLoader.getInstance().isModLoaded("minihud");
     }
 
     @Override
