@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(WorldAccess.class, priority = 1001)
+@Mixin(value = WorldAccess.class, priority = 999)
 public interface MixinWorldAccess extends RegistryWorldView, LunarWorldView {
     @Shadow
     WorldProperties getLevelProperties();
