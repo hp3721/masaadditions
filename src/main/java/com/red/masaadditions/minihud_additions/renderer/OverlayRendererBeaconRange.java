@@ -1,5 +1,6 @@
 package com.red.masaadditions.minihud_additions.renderer;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.red.masaadditions.minihud_additions.config.ConfigsExtended;
 import com.red.masaadditions.minihud_additions.config.RendererToggleExtended;
 import com.red.masaadditions.minihud_additions.mixin.MixinBeaconBlockEntityAccessor;
@@ -12,15 +13,19 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.BlockEntityTickInvoker;
 import net.minecraft.world.chunk.Chunk;
+import org.lwjgl.opengl.GL11;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -82,7 +87,7 @@ public class OverlayRendererBeaconRange extends OverlayRendererBase {
         RenderObjectBase renderQuads = this.renderObjects.get(0);
         RenderObjectBase renderLines = this.renderObjects.get(1);
         BUFFER_1.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        BUFFER_2.begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
+        BUFFER_2.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
 
         synchronized (BEACON_POSITIONS) {
             this.renderBeaconRanges(entity.getEntityWorld(), cameraPos);
@@ -99,7 +104,7 @@ public class OverlayRendererBeaconRange extends OverlayRendererBase {
     @Override
     public void allocateGlResources() {
         this.allocateBuffer(VertexFormat.DrawMode.QUADS);
-        this.allocateBuffer(VertexFormat.DrawMode.LINES);
+        this.allocateBuffer(VertexFormat.DrawMode.DEBUG_LINES);
     }
 
     protected static Color4f getColorForLevel(int level) {
@@ -183,5 +188,98 @@ public class OverlayRendererBeaconRange extends OverlayRendererBase {
         }
 
         return maxY + 4;
+    }
+
+    public static void renderBeaconBoxForPlayerIfHoldingItem(PlayerEntity player) {
+        Item item = player.getMainHandStack().getItem();
+
+        if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BeaconBlock) {
+            renderBeaconBoxForPlayer(player);
+            return;
+        }
+
+        item = player.getOffHandStack().getItem();
+
+        if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BeaconBlock) {
+            renderBeaconBoxForPlayer(player);
+        }
+    }
+
+    private static void renderBeaconBoxForPlayer(PlayerEntity player) {
+        Vec3d cameraPos = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
+        double x = Math.floor(player.getX()) - cameraPos.getX();
+        double y = Math.floor(player.getY()) - cameraPos.getY();
+        double z = Math.floor(player.getZ()) - cameraPos.getZ();
+        // Use the slot number as the level if sneaking
+        int level = player.isSneaking() ? Math.min(4, player.getInventory().selectedSlot + 1) : 4;
+        double range = level * 10 + 10;
+        double minX = x - range;
+        double minY = y - range;
+        double minZ = z - range;
+        double maxX = x + range + 1;
+        double maxY = y + 4;
+        double maxZ = z + range + 1;
+        Color4f color = getColorForLevel(level);
+
+        RenderSystem.disableTexture();
+        //RenderSystem.enableAlphaTest();
+        //GlStateManager.alphaFunc(GL11.GL_GREATER, 0.01F);
+        RenderSystem.disableCull();
+        //RenderSystem.disableLighting();
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthMask(false);
+        RenderSystem.polygonOffset(-3f, -3f);
+        RenderSystem.enablePolygonOffset();
+        RenderSystem.lineWidth(1f);
+
+        fi.dy.masa.malilib.render.RenderUtils.setupBlend();
+        fi.dy.masa.malilib.render.RenderUtils.color(1f, 1f, 1f, 1f);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+        buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+
+        fi.dy.masa.malilib.render.RenderUtils.drawBoxAllSidesBatchedQuads(minX, minY, minZ, maxX, maxY, maxZ, Color4f.fromColor(color, 0.3f), buffer);
+
+        tessellator.draw();
+
+        buffer.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
+        fi.dy.masa.malilib.render.RenderUtils.drawBoxAllEdgesBatchedLines(minX, minY, minZ, maxX, maxY, maxZ, Color4f.fromColor(color, 1f), buffer);
+
+        tessellator.draw();
+
+        RenderSystem.polygonOffset(0f, 0f);
+        RenderSystem.disablePolygonOffset();
+        RenderSystem.enableCull();
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
+    }
+
+    static void drawBoxAllEdgesBatchedLines(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color4f color, BufferBuilder buffer)
+    {
+        buffer.vertex(minX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(maxX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
+        buffer.vertex(minX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
     }
 }
