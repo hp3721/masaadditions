@@ -16,7 +16,7 @@ public abstract class MixinBlockDustParticle extends Particle {
     }
 
     // From UsefulMod by nessie
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>(Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", at = @At("RETURN"))
     private void removeRandomParticleMotion(CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_INSANE_BLOCK_BREAKING_PARTICLES.getBooleanValue()) {
             final double multiplier = this.random.nextFloat() * 5;

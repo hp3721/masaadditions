@@ -54,22 +54,6 @@ public class OverlayRendererBeaconRange extends OverlayRendererBase {
         needsUpdate = true;
     }
 
-    public static void checkNeedsUpdate(BlockPos pos, BlockState state) {
-        synchronized (BEACON_POSITIONS) {
-            if (RendererToggleExtended.OVERLAY_BEACON_RANGE.getBooleanValue() && (state.getBlock() instanceof BeaconBlock || BEACON_POSITIONS.contains(pos))) {
-                setNeedsUpdate();
-            }
-        }
-    }
-
-    public static void checkNeedsUpdate(ChunkPos chunkPos) {
-        synchronized (BEACON_POSITIONS) {
-            if (RendererToggleExtended.OVERLAY_BEACON_RANGE.getBooleanValue() && BEACON_CHUNKS.contains(chunkPos)) {
-                setNeedsUpdate();
-            }
-        }
-    }
-
     @Override
     public boolean shouldRender(MinecraftClient mc) {
         return RendererToggleExtended.OVERLAY_BEACON_RANGE.getBooleanValue();
@@ -222,10 +206,7 @@ public class OverlayRendererBeaconRange extends OverlayRendererBase {
         Color4f color = getColorForLevel(level);
 
         RenderSystem.disableTexture();
-        //RenderSystem.enableAlphaTest();
-        //GlStateManager.alphaFunc(GL11.GL_GREATER, 0.01F);
         RenderSystem.disableCull();
-        //RenderSystem.disableLighting();
         RenderSystem.enableDepthTest();
         RenderSystem.depthMask(false);
         RenderSystem.polygonOffset(-3f, -3f);
@@ -253,33 +234,5 @@ public class OverlayRendererBeaconRange extends OverlayRendererBase {
         RenderSystem.enableCull();
         RenderSystem.enableTexture();
         RenderSystem.disableBlend();
-    }
-
-    static void drawBoxAllEdgesBatchedLines(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color4f color, BufferBuilder buffer)
-    {
-        buffer.vertex(minX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, minY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, maxY, minZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, minY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(maxX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
-        buffer.vertex(minX, maxY, maxZ).color(color.r, color.g, color.b, color.a).normal(0, 0, 0).next();
     }
 }
