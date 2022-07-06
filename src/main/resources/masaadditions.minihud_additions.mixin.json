@@ -5,10 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "com.red.masaadditions.minihud_additions.mixin.MixinPlugin",
   "mixins": [
-    "MixinBeaconBlockEntity",
-    "MixinBeaconBlockEntityAccessor",
-    "MixinClientPlayerInteractionManager",
-    "MixinWorldAccessor"
+
   ],
   "injectors": {
     "defaultRequire": 1
