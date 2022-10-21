@@ -6,6 +6,7 @@
   "plugin": "com.red.masaadditions.tweakeroo_additions.mixin.MixinPlugin",
   "mixins": [
     "MixinAbstractBlockAccessor",
+    "MixinAbstractBlockState",
     "MixinAnvilScreen",
     "MixinArmorItem",
     "MixinBeaconBlockEntityRenderer",
@@ -19,7 +20,6 @@
     "MixinClientPlayNetworkHandler",
     "MixinClientWorld",
     "MixinDimensionEffects",
-    "MixinFlowerBlock",
     "MixinHorseBaseEntity",
     "MixinInGameHud",
     "MixinItemFrameEntityRenderer",
@@ -31,7 +31,6 @@
     "MixinPlayerEntityRenderer",
     "MixinRecipeBookWidget",
     "MixinSlimeBlock",
-    "MixinTallPlantBlock",
     "MixinTitleScreen",
     "MixinWorldAccess"
   ],

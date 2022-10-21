@@ -10,8 +10,7 @@ import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 public class MiscUtils {
     // From 1.12 Tweakeroo by Masa
@@ -39,7 +38,7 @@ public class MiscUtils {
     }
 
     public static boolean handleUseBed(Block block, ClientWorld world) {
-        return ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() && block instanceof BedBlock && !world.getDimension().isBedWorking();
+        return ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() && block instanceof BedBlock && !world.getDimension().bedWorks();
     }
 
     public static boolean handleUseTools(Block block, Item heldItem) {
