@@ -5,6 +5,7 @@ import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import com.red.masaadditions.tweakeroo_additions.config.HotkeysExtended;
 import com.red.masaadditions.tweakeroo_additions.tweaks.PlacementTweaks;
 import com.red.masaadditions.tweakeroo_additions.util.Callbacks;
+import com.red.masaadditions.tweakeroo_additions.util.MiscUtils;
 import fi.dy.masa.malilib.hotkeys.IHotkeyCallback;
 import fi.dy.masa.tweakeroo.config.FeatureToggle;
 import net.minecraft.client.MinecraftClient;
@@ -35,5 +36,6 @@ public abstract class MixinCallbacks {
             }
         });
         FeatureToggle.TWEAK_FAST_RIGHT_CLICK.getKeybind().setCallback(new Callbacks.KeyCallbackToggleFastRightClick(FeatureToggle.TWEAK_FAST_RIGHT_CLICK));
+        FeatureToggleExtended.TWEAK_MOVEMENT_HOLD.setValueChangeCallback((cfg) -> MiscUtils.setMovementHoldKeys(cfg.getBooleanValue()));
     }
 }

@@ -1,9 +1,14 @@
 package com.red.masaadditions.tweakeroo_additions.util;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
+import com.red.masaadditions.tweakeroo_additions.mixin.MixinKeyBindingAccessor;
 import net.minecraft.block.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.HoeItem;
@@ -11,9 +16,28 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MiscUtils {
+    public static final ArrayList<InputUtil.Key> MOVEMENT_HOLD_KEYS = new ArrayList<>();
+
+    public static void setMovementHoldKeys(boolean enabled) {
+        if (!enabled) {
+            KeyBinding.updatePressedStates();
+            return;
+        }
+
+        MOVEMENT_HOLD_KEYS.clear();
+        GameOptions options = MinecraftClient.getInstance().options;
+        InputUtil.Key[] movementKeys = {InputUtil.fromTranslationKey(options.keyJump.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.keyLeft.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.keyRight.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.keyBack.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.keyForward.getBoundKeyTranslationKey())};
+        for (InputUtil.Key movementKey : movementKeys) {
+            if (MixinKeyBindingAccessor.getKeyToBindings().get(movementKey).isPressed()) {
+                MOVEMENT_HOLD_KEYS.add(movementKey);
+            }
+        }
+    }
+
     // From 1.12 Tweakeroo by Masa
     public static void addCustomBlockBreakingParticles(ParticleManager manager, ClientWorld world, Random rand, BlockPos pos, BlockState state) {
         if (state.getMaterial() != Material.AIR) {
@@ -34,6 +58,10 @@ public class MiscUtils {
         }
     }
 
+    public static boolean handleUseSnowLayer(Block block, ClientPlayerEntity player) {
+        return ConfigsExtended.Disable.DISABLE_SNOW_LAYER_STACKING.getBooleanValue() && block instanceof SnowBlock;
+    }
+
     public static boolean handleUseDragonEgg(Block block, ClientPlayerEntity player) {
         return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && block instanceof DragonEggBlock && !player.isSneaking();
     }
@@ -51,17 +79,12 @@ public class MiscUtils {
     }
 
     public static int getSlotNumberForEquipmentSlot(EquipmentSlot type) {
-        switch (type) {
-            case HEAD:
-                return 5;
-            case CHEST:
-                return 6;
-            case LEGS:
-                return 7;
-            case FEET:
-                return 8;
-            default:
-                return -1;
-        }
+        return switch (type) {
+            case HEAD -> 5;
+            case CHEST -> 6;
+            case LEGS -> 7;
+            case FEET -> 8;
+            default -> -1;
+        };
     }
 }

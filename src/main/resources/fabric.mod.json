@@ -23,7 +23,8 @@
     "masaadditions.tweakeroo_additions.mixin.json",
     "masaadditions.minihud_additions.minihud_mixin.json",
     "masaadditions.minihud_additions.mixin.json",
-    "masaadditions.litematica_additions.litematica_mixin.json"
+    "masaadditions.litematica_additions.litematica_mixin.json",
+    "masaadditions.litematica_additions.mixin.json"
   ],
   "accessWidener" : "masaadditions.aw",
   "depends": {
