@@ -22,13 +22,15 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
     TWEAK_INSANE_BLOCK_BREAKING_PARTICLES("tweakInsaneBlockBreakingParticles", false, "", "Changes block breaking particles to have no gravity and increased velocity.\nThis feature is originally from UsefulMod by nessie."),
     TWEAK_ITEM_NAME_COPY("tweakItemNameCopy", false, "", "Sets item name in anvil to string stored in clipboard."),
     TWEAK_LLAMA_STEERING("tweakLlamaSteering", false, "", "Allows the player to control Llamas while riding them.\nPorted from 1.12 Tweakeroo."),
+    TWEAK_MOVEMENT_HOLD("tweakMovementHold", false, "", KeybindSettings.PRESS_ALLOWEXTRA, "Emulates holding down the movement keys that were\ncurrently pressed when the tweak is enabled."),
+    TWEAK_NAME_TAG_PIGLINS("tweakNameTagPiglins", false, "", "Only allows player to use name tags on piglins holding swords"),
     TWEAK_ONE_HIT_KILL("tweakOneHitKill", false, "", "Enables one hit killing attacked living entities if player is in creative.\nRequires operator permission to use /kill."),
+    TWEAK_OVERRIDE_SKY_TIME("tweakOverrideSkyTime", false, "", "Overrides the day time used for rendering the sky.\nInspired by tweakDayCycleOverride in Tweakfork by Andrews54757.\nAllows you to see the actual time through mods such as MiniHUD\nor using the Clock item unlike tweakDayCycleOverride."),
     TWEAK_OVERRIDE_WINDOW_TITLE("tweakOverrideWindowTitle", false, "", "Replaces the current window title with the string\nspecified in the Window Title Override generic config."),
     TWEAK_PERIMETER_WALL_DIG_HELPER("tweakPerimeterWallDigHelper", false, "", "Prevents player from mining underneath the block types\nspecified in the Perimeter Outline Blocks list."),
     TWEAK_PREVENT_ATTACK_ENTITIES("tweakPreventAttackEntities", false, "", "Prevents player from attacking entities with the entity types\nspecified in the Prevent Attack Entities list."),
     TWEAK_RAINBOW_LEAVES("tweakRainbowLeaves", false, "", "Makes leaves more colorful.\nThis feature is originally from UsefulMod by nessie."),
-    TWEAK_RESPAWN_ON_DEATH("tweakRespawnOnDeath", false, "", "Enables automatic respawning on death.\nThis feature is originally from UsefulMod by nessie."),
-    TWEAK_OVERRIDE_SKY_TIME("tweakOverrideSkyTime", false, "", "Overrides the day time used for rendering the sky.\nInspired by tweakDayCycleOverride in Tweakfork by Andrews54757.\nAllows you to see the actual time through mods such as MiniHUD\nor using the Clock item unlike tweakDayCycleOverride.");
+    TWEAK_RESPAWN_ON_DEATH("tweakRespawnOnDeath", false, "", "Enables automatic respawning on death.\nThis feature is originally from UsefulMod by nessie.");
 
     private final String name;
     private final String comment;

@@ -14,6 +14,9 @@ public class ConfigsExtended {
         public static final ConfigDouble CLOUD_HEIGHT = new ConfigDouble("cloudHeight", 128, 0, 256, "This controls the height of clouds in the Overworld dimension.");
         public static final ConfigBoolean DERPY_CHICKEN = new ConfigBoolean("derpyChicken", false, "Makes chickens always face upwards.\nThis feature is originally from CutelessMod by nessie.");
         public static final ConfigBoolean HAND_RESTOCK_CONTINUOUS = new ConfigBoolean("handRestockContinuous", false, "If enabled, then hand restocking is attempted every tick,\nwhereas normally it only happens before and after\nleft/right clicks or in the fast block placement mode.\nPorted from 1.12 Tweakeroo.\n§6It is recommended to have this disabled, §6unless you\nknow you will need it for some specific use case.");
+        public static final ConfigBoolean GRID_RESTRICT_X = new ConfigBoolean("gridRestrictX", true, "If enabled, then grid restriction will work along the X axis.");
+        public static final ConfigBoolean GRID_RESTRICT_Y = new ConfigBoolean("gridRestrictY", true, "If enabled, then grid restriction will work along the Y axis.");
+        public static final ConfigBoolean GRID_RESTRICT_Z = new ConfigBoolean("gridRestrictZ", true, "If enabled, then grid restriction will work along the Z axis.");
         public static final ConfigInteger SCOREBOARD_SIDEBAR_MAX_LENGTH = new ConfigInteger("scoreboardSidebarMaxLength", 15, 1, 30, "This controls the maximum length of the scoreboard sidebar.");
         public static final ConfigInteger SKY_TIME_OVERRIDE = new ConfigInteger("skyTimeOverride", 0, 0, 24000, "The day time to use when overriding the time used for rendering the sky if the Override Sky Time tweak is enabled.");
         public static final ConfigString WINDOW_TITLE_OVERRIDE = new ConfigString("windowTitleOverride", "", "The title used to override the default instance window title if the Override Window Title tweak is enabled.");
@@ -26,6 +29,9 @@ public class ConfigsExtended {
                 CLOUD_HEIGHT,
                 DERPY_CHICKEN,
                 HAND_RESTOCK_CONTINUOUS,
+                GRID_RESTRICT_X,
+                GRID_RESTRICT_Y,
+                GRID_RESTRICT_Z,
                 SCOREBOARD_SIDEBAR_MAX_LENGTH,
                 SKY_TIME_OVERRIDE,
                 WINDOW_TITLE_OVERRIDE
@@ -59,8 +65,11 @@ public class ConfigsExtended {
         public static final ConfigBooleanHotkeyed DISABLE_PLANT_BLOCK_MODEL_OFFSET = new ConfigBooleanHotkeyed("disablePlantBlockModelOffset", false, "", "Disables the random XZ offsetting of plant block models.\nThis feature is originally from UsefulMod by nessie.");
         public static final ConfigBooleanHotkeyed DISABLE_REALMS_BUTTON = new ConfigBooleanHotkeyed("disableRealmsButton", false, "", "Disables the 'Minecraft Realms' button on the title screen.\nThis feature is originally from UsefulMod by nessie.");
         public static final ConfigBooleanHotkeyed DISABLE_SCOREBOARD_SIDEBAR_RENDERING = new ConfigBooleanHotkeyed("disableScoreboardSidebarRendering", false, "", "Disables rendering of scoreboard sidebar.");
+        public static final ConfigBooleanHotkeyed DISABLE_SLEEPING_NOTIFICATION = new ConfigBooleanHotkeyed("disableSleepingNotification", false, "", "Prevents the sleeping status from being displayed in the action bar.");
         public static final ConfigBooleanHotkeyed DISABLE_SLIME_BLOCK_BOUNCING = new ConfigBooleanHotkeyed("disableSlimeBlockBouncing", false, "", "Prevents player from bouncing on slime blocks.");
+        public static final ConfigBooleanHotkeyed DISABLE_SNOW_LAYER_STACKING = new ConfigBooleanHotkeyed("disableSnowLayerStacking", false, "", "Prevents player from placing multiple snow layers in a block.");
         public static final ConfigBooleanHotkeyed DISABLE_SPRINTING_UNDERWATER = new ConfigBooleanHotkeyed("disableSprintingUnderwater", true, "", "Prevents player from sprinting underwater with the Disable Swimming tweak.\nAlso, prevents player from sprinting in one block tall water with the\nPermanent Sprint tweak, which is not possible in Vanilla, if enabled.");
+        public static final ConfigBooleanHotkeyed DISABLE_STUCK_ARROWS_RENDERING = new ConfigBooleanHotkeyed("disableStuckArrowsRendering", false, "", "Disables rendering of stuck arrows.");
         public static final ConfigBooleanHotkeyed DISABLE_SWIMMING = new ConfigBooleanHotkeyed("disableSwimming", false, "", "Disables swimming while sprinting underwater.");
 
         public static final ImmutableList<IHotkeyTogglable> ADDITIONAL_OPTIONS = ImmutableList.of(
@@ -80,8 +89,11 @@ public class ConfigsExtended {
                 DISABLE_PLANT_BLOCK_MODEL_OFFSET,
                 DISABLE_REALMS_BUTTON,
                 DISABLE_SCOREBOARD_SIDEBAR_RENDERING,
+                DISABLE_SLEEPING_NOTIFICATION,
                 DISABLE_SLIME_BLOCK_BOUNCING,
+                DISABLE_SNOW_LAYER_STACKING,
                 DISABLE_SPRINTING_UNDERWATER,
+                DISABLE_STUCK_ARROWS_RENDERING,
                 DISABLE_SWIMMING
         );
     }

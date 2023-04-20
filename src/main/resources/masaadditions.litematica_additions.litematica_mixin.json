@@ -5,8 +5,14 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "com.red.masaadditions.litematica_additions.litematica_mixin.MixinPlugin",
   "mixins": [
+    "MixinBlockModelRendererSchematic",
+    "MixinChunkRendererSchematicVbo",
+    "MixinGenericConfigs",
     "MixinGuiMainMenu",
-    "MixinLitematicaGui"
+    "MixinHotkeys",
+    "MixinKeyCallbacks",
+    "MixinLitematicaGui",
+    "MixinTaskCountBlocksPlacement"
   ],
   "injectors": {
     "defaultRequire": 1
