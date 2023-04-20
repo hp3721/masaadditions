@@ -8,7 +8,7 @@
     "MixinAbstractBlockAccessor",
     "MixinAbstractBlockState",
     "MixinAnvilScreen",
-    "MixinArmorItem",
+    "MixinEquipment",
     "MixinBeaconBlockEntityRenderer",
     "MixinBlockColors",
     "MixinBlockDustParticle",

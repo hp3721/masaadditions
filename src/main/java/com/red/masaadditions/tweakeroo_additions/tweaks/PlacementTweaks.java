@@ -7,9 +7,9 @@ import net.minecraft.block.DragonEggBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +49,7 @@ public class PlacementTweaks {
     private static Block getBlockFromName(String name) {
         try {
             Identifier identifier = new Identifier(name);
-            return Registry.BLOCK.getOrEmpty(identifier).orElse(null);
+            return Registries.BLOCK.getOrEmpty(identifier).orElse(null);
         } catch (Exception e) {
             return null;
         }
