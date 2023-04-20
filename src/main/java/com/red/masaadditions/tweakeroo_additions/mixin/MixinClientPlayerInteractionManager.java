@@ -1,6 +1,5 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
-import com.red.masaadditions.MasaAdditions;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import com.red.masaadditions.tweakeroo_additions.tweaks.PlacementTweaks;
@@ -12,8 +11,12 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.NameTagItem;
+import net.minecraft.item.SwordItem;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +29,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = ClientPlayerInteractionManager.class)
+import java.util.stream.StreamSupport;
+
+@Mixin(ClientPlayerInteractionManager.class)
 public class MixinClientPlayerInteractionManager {
     @Unique
     float attackedBlockHardness;
@@ -77,6 +82,21 @@ public class MixinClientPlayerInteractionManager {
     private void onAttackEntity2(PlayerEntity player, Entity target, CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_PREVENT_ATTACK_ENTITIES.getBooleanValue() && ConfigsExtended.Lists.PREVENT_ATTACK_ENTITIES_LIST.getStrings().contains(EntityType.getId(target.getType()).toString())) {
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "interactEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;syncSelectedSlot()V", shift = At.Shift.AFTER), cancellable = true)
+    private void onInteractEntity(PlayerEntity player, Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
+        if (FeatureToggleExtended.TWEAK_NAME_TAG_PIGLINS.getBooleanValue() && player.getStackInHand(hand).getItem() instanceof NameTagItem) {
+            if (!(entity instanceof PiglinEntity)) {
+                cir.setReturnValue(ActionResult.PASS);
+                return;
+            }
+
+            PiglinEntity piglinEntity = (PiglinEntity)entity;
+            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || StreamSupport.stream(piglinEntity.getItemsHand().spliterator(), false).noneMatch(itemStack -> itemStack.getItem() instanceof SwordItem)) {
+                cir.setReturnValue(ActionResult.PASS);
+            }
         }
     }
 }
