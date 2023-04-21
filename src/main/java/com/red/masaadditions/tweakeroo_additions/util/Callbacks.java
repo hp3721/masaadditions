@@ -50,7 +50,7 @@ public class Callbacks {
                         pos = adjustPositionToSideOfEntity(pos, this.mc.player, ((BlockHitResult) trace).getSide());
                     }
 
-                    this.mc.player.sendCommand(String.format("/tp @p %.6f %.6f %.6f", pos.x, maintainY ? this.mc.player.getY() : pos.y, pos.z));
+                    this.mc.player.networkHandler.sendCommand(String.format("tp @p %.6f %.6f %.6f", pos.x, maintainY ? this.mc.player.getY() : pos.y, pos.z));
                 }
             }
         }

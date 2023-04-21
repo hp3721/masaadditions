@@ -12,15 +12,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LlamaEntity.class)
-public class MixinLlamaEntity extends AbstractHorseEntity {
+public abstract class MixinLlamaEntity extends AbstractHorseEntity {
     protected MixinLlamaEntity(EntityType<? extends AbstractHorseEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    @Inject(method = "getPrimaryPassenger()Lnet/minecraft/entity/LivingEntity;", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getControllingPassenger()Lnet/minecraft/entity/LivingEntity;", at = @At("HEAD"), cancellable = true)
     private void allowLamaSteering(CallbackInfoReturnable<LivingEntity> cir) {
         if (FeatureToggleExtended.TWEAK_LLAMA_STEERING.getBooleanValue()) {
-            cir.setReturnValue(super.getPrimaryPassenger());
+            cir.setReturnValue(super.getControllingPassenger());
         }
     }
 }

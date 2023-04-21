@@ -36,7 +36,7 @@ public class MixinClientPlayerInteractionManager {
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;attack(Lnet/minecraft/entity/Entity;)V"))
     private void onAttackEntity1(PlayerEntity player, Entity target, CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_ONE_HIT_KILL.getBooleanValue() && player.isCreative() && target instanceof LivingEntity && ((LivingEntity) target).getHealth() > 0f) {
-            ((ClientPlayerEntity) player).sendCommand(String.format("/kill %s", target.getUuidAsString()));
+            ((ClientPlayerEntity) player).networkHandler.sendCommand(String.format("kill %s", target.getUuidAsString()));
         }
     }
 
