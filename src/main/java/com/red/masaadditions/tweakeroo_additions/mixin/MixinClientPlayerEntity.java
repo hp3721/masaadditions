@@ -5,6 +5,8 @@ import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.network.encryption.PlayerPublicKey;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,8 +22,8 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     @Shadow
     public abstract boolean isSubmergedInWater();
 
-    public MixinClientPlayerEntity(ClientWorld world, GameProfile profile) {
-        super(world, profile);
+    public MixinClientPlayerEntity(ClientWorld world, GameProfile profile, @Nullable PlayerPublicKey publicKey) {
+        super(world, profile, publicKey);
     }
 
     @Inject(method = "setSprinting", at = @At("HEAD"), cancellable = true)

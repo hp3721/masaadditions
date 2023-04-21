@@ -42,7 +42,7 @@ public class Callbacks {
         private void blinkDriveTeleport(boolean maintainY) {
             if (this.mc.player.isCreative()) {
                 Entity entity = fi.dy.masa.malilib.util.EntityUtils.getCameraEntity();
-                HitResult trace = RayTraceUtils.getRayTraceFromEntity(this.mc.world, entity, true, this.mc.options.viewDistance * 16 + 200);
+                HitResult trace = RayTraceUtils.getRayTraceFromEntity(this.mc.world, entity, true, this.mc.options.getClampedViewDistance() * 16 + 200);
 
                 if (trace.getType() != HitResult.Type.MISS) {
                     Vec3d pos = trace.getPos();
@@ -50,7 +50,7 @@ public class Callbacks {
                         pos = adjustPositionToSideOfEntity(pos, this.mc.player, ((BlockHitResult) trace).getSide());
                     }
 
-                    this.mc.player.sendChatMessage(String.format("/tp @p %.6f %.6f %.6f", pos.x, maintainY ? this.mc.player.getY() : pos.y, pos.z));
+                    this.mc.player.sendCommand(String.format("/tp @p %.6f %.6f %.6f", pos.x, maintainY ? this.mc.player.getY() : pos.y, pos.z));
                 }
             }
         }

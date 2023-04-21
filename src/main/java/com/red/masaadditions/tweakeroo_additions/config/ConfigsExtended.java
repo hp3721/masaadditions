@@ -32,14 +32,6 @@ public class ConfigsExtended {
         );
     }
 
-    public static class Fixes {
-        public static final ConfigBoolean MINING_GHOST_BLOCK_FIX = new ConfigBoolean("miningGhostBlockFix", false, "Reduces ghost blocks while mining by sending\nuse item packets on the mined block.\nThis feature is originally from UsefulMod by nessie.");
-
-        public static final ImmutableList<IConfigBase> ADDITIONAL_OPTIONS = ImmutableList.of(
-                MINING_GHOST_BLOCK_FIX
-        );
-    }
-
     public static class Lists {
         public static final ConfigStringList PERIMETER_OUTLINE_BLOCKS_LIST = new ConfigStringList("perimeterOutlineBlocksList", ImmutableList.of(), "The block types checked by the Perimeter Wall Dig Helper tweak.");
         public static final ConfigStringList PREVENT_ATTACK_ENTITIES_LIST = new ConfigStringList("preventAttackEntitiesList", ImmutableList.of(), "The entity types checked by the Prevent Attack Entities tweak.");
