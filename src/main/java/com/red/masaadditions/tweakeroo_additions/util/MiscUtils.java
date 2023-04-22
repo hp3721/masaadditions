@@ -20,7 +20,7 @@ import net.minecraft.util.math.random.Random;
 import java.util.ArrayList;
 
 public class MiscUtils {
-    public static final ArrayList<InputUtil.Key> MOVEMENT_HOLD_KEYS = new ArrayList<>();
+    public static final ArrayList<KeyBinding> MOVEMENT_HOLD_KEYS = new ArrayList<>();
 
     public static void setMovementHoldKeys(boolean enabled) {
         if (!enabled) {
@@ -30,9 +30,9 @@ public class MiscUtils {
 
         MOVEMENT_HOLD_KEYS.clear();
         GameOptions options = MinecraftClient.getInstance().options;
-        InputUtil.Key[] movementKeys = {InputUtil.fromTranslationKey(options.jumpKey.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.leftKey.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.rightKey.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.backKey.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.forwardKey.getBoundKeyTranslationKey())};
-        for (InputUtil.Key movementKey : movementKeys) {
-            if (MixinKeyBindingAccessor.getKeyToBindings().get(movementKey).isPressed()) {
+        KeyBinding[] movementKeys = { options.jumpKey, options.leftKey, options.rightKey, options.backKey, options.forwardKey };
+        for (KeyBinding movementKey : movementKeys) {
+            if (movementKey.isPressed()) {
                 MOVEMENT_HOLD_KEYS.add(movementKey);
             }
         }
