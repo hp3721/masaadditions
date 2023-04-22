@@ -1,15 +1,12 @@
 package com.red.masaadditions.tweakeroo_additions.util;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
-import com.red.masaadditions.tweakeroo_additions.mixin.MixinKeyBindingAccessor;
 import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.client.util.InputUtil.Key;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.HoeItem;
@@ -21,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MiscUtils {
-    public static final ArrayList<Key> MOVEMENT_HOLD_KEYS = new ArrayList<>();
+    public static final ArrayList<KeyBinding> MOVEMENT_HOLD_KEYS = new ArrayList<>();
 
     public static void setMovementHoldKeys(boolean enabled) {
         if (!enabled) {
@@ -31,9 +28,9 @@ public class MiscUtils {
 
         MOVEMENT_HOLD_KEYS.clear();
         GameOptions options = MinecraftClient.getInstance().options;
-        Key[] movementKeys = {InputUtil.fromTranslationKey(options.keyJump.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.keyLeft.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.keyRight.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.keyBack.getBoundKeyTranslationKey()), InputUtil.fromTranslationKey(options.keyForward.getBoundKeyTranslationKey())};
-        for (Key movementKey : movementKeys) {
-            if (MixinKeyBindingAccessor.getKeyToBindings().get(movementKey).isPressed()) {
+        KeyBinding[] movementKeys = { options.keyJump, options.keyLeft, options.keyRight, options.keyBack, options.keyForward };
+        for (KeyBinding movementKey : movementKeys) {
+            if (movementKey.isPressed()) {
                 MOVEMENT_HOLD_KEYS.add(movementKey);
             }
         }
