@@ -23,8 +23,8 @@ public class MixinMinecraftClient {
         {
             if (FeatureToggleExtended.TWEAK_MOVEMENT_HOLD.getBooleanValue())
             {
-                for (InputUtil.Key movementKey : MiscUtils.MOVEMENT_HOLD_KEYS) {
-                    KeyBinding.setKeyPressed(movementKey, true);
+                for (KeyBinding movementKey : MiscUtils.MOVEMENT_HOLD_KEYS) {
+                    movementKey.setPressed(true);
                 }
             }
         }
