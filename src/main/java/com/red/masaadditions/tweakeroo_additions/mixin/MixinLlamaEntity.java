@@ -17,10 +17,10 @@ public abstract class MixinLlamaEntity extends AbstractHorseEntity {
         super(entityType, world);
     }
 
-    @Inject(method = "getControllingPassenger()Lnet/minecraft/entity/LivingEntity;", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getPrimaryPassenger()Lnet/minecraft/entity/LivingEntity;", at = @At("HEAD"), cancellable = true)
     private void allowLamaSteering(CallbackInfoReturnable<LivingEntity> cir) {
         if (FeatureToggleExtended.TWEAK_LLAMA_STEERING.getBooleanValue()) {
-            cir.setReturnValue(super.getControllingPassenger());
+            cir.setReturnValue(super.getPrimaryPassenger());
         }
     }
 }

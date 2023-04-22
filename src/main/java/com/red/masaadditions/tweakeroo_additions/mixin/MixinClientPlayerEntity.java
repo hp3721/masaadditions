@@ -9,10 +9,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
+    @Shadow
+    public int ticksSinceSprintingChanged;
+
     @Shadow
     public abstract boolean isSubmergedInWater();
 
@@ -20,10 +24,12 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         super(world, profile);
     }
 
-    @Inject(method = "canStartSprinting", at = @At("HEAD"), cancellable = true)
-    private void setSprinting(CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "setSprinting", at = @At("HEAD"), cancellable = true)
+    private void setSprinting(boolean sprinting, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_SPRINTING_UNDERWATER.getBooleanValue() && ((this.isTouchingWater() && !this.isSubmergedInWater()) || (ConfigsExtended.Disable.DISABLE_SWIMMING.getBooleanValue()))) {
-            cir.setReturnValue(false);
+            super.setSprinting(false);
+            this.ticksSinceSprintingChanged = 0;
+            ci.cancel();
         }
     }
 

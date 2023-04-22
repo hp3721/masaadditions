@@ -16,10 +16,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(value = Equipment.class)
-public interface MixinEquipment {
-    @Inject(method = "equipAndSwap", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/TypedActionResult;fail(Ljava/lang/Object;)Lnet/minecraft/util/TypedActionResult;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void use(Item item, World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, ItemStack itemStack) {
+@Mixin(value = {ArmorItem.class, ElytraItem.class})
+public class MixinArmorItem {
+    @Inject(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/TypedActionResult;fail(Ljava/lang/Object;)Lnet/minecraft/util/TypedActionResult;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, ItemStack itemStack) {
         MinecraftClient mc = MinecraftClient.getInstance();
 
         if (!FeatureToggleExtended.TWEAK_FORCE_SWAP_GEAR.getBooleanValue() || !user.isSneaking() || hand != Hand.MAIN_HAND || mc.interactionManager == null || user.currentScreenHandler != user.playerScreenHandler) {
