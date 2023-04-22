@@ -30,7 +30,6 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
     TWEAK_OVERRIDE_SKY_TIME("tweakOverrideSkyTime", false, "", "Overrides the day time used for rendering the sky.\nInspired by tweakDayCycleOverride in Tweakfork by Andrews54757.\nAllows you to see the actual time through mods such as MiniHUD\nor using the Clock item unlike tweakDayCycleOverride."),
     TWEAK_OVERRIDE_WINDOW_TITLE("tweakOverrideWindowTitle", false, "", "Replaces the current window title with the string\nspecified in the Window Title Override generic config."),
     TWEAK_PERIMETER_WALL_DIG_HELPER("tweakPerimeterWallDigHelper", false, "", "Prevents player from mining underneath the block types\nspecified in the Perimeter Outline Blocks list."),
-    TWEAK_PREVENT_ATTACK_DRAGON("tweakPreventAttackDragon", false, "", "Prevents player from attacking dragon unless it is at specific coordinates."),
     TWEAK_PREVENT_ATTACK_ENTITIES("tweakPreventAttackEntities", false, "", "Prevents player from attacking entities with the entity types\nspecified in the Prevent Attack Entities list."),
     TWEAK_RAINBOW_LEAVES("tweakRainbowLeaves", false, "", "Makes leaves more colorful.\nThis feature is originally from UsefulMod by nessie."),
     TWEAK_RESPAWN_ON_DEATH("tweakRespawnOnDeath", false, "", "Enables automatic respawning on death.\nThis feature is originally from UsefulMod by nessie.");
