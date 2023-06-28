@@ -13,7 +13,7 @@ import fi.dy.masa.malilib.gui.widgets.WidgetFileBrowserBase;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.KeyCodes;
 import fi.dy.masa.malilib.util.StringUtils;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implements ISelectionListener<WidgetFileBrowserBase.DirectoryEntry> {
@@ -93,10 +93,10 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public void drawContents(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        super.drawContents(matrixStack, mouseX, mouseY, partialTicks);
+    public void drawContents(DrawContext drawContext, int mouseX, int mouseY, float partialTicks) {
+        super.drawContents(drawContext, mouseX, mouseY, partialTicks);
 
-        this.textField.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.textField.render(drawContext, mouseX, mouseY, partialTicks);
     }
 
     @Override
