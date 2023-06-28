@@ -1,14 +1,12 @@
 package com.red.masaadditions.tweakeroo_additions.util;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
-import com.red.masaadditions.tweakeroo_additions.mixin.MixinKeyBindingAccessor;
 import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.HoeItem;
@@ -40,7 +38,7 @@ public class MiscUtils {
 
     // From 1.12 Tweakeroo by Masa
     public static void addCustomBlockBreakingParticles(ParticleManager manager, ClientWorld world, Random rand, BlockPos pos, BlockState state) {
-        if (state.getMaterial() != Material.AIR) {
+        if (!state.isAir()) {
             int limit = ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_LIMIT.getIntegerValue();
 
             for (int i = 0; i < limit; ++i) {
