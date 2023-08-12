@@ -41,10 +41,14 @@ public class ConfigsExtended {
     public static class Lists {
         public static final ConfigStringList PERIMETER_OUTLINE_BLOCKS_LIST = new ConfigStringList("perimeterOutlineBlocksList", ImmutableList.of(), "The block types checked by the Perimeter Wall Dig Helper tweak.");
         public static final ConfigStringList PREVENT_ATTACK_ENTITIES_LIST = new ConfigStringList("preventAttackEntitiesList", ImmutableList.of(), "The entity types checked by the Prevent Attack Entities tweak.");
+        public static final ConfigStringList SWAP_ALMOST_BROKEN_TOOLS_WHITELIST = new ConfigStringList("swapAlmostBrokenToolsWhitelist", ImmutableList.of(), "A whitelist of tools checked by the Swap Almost Broken Tools tweak.");
+        public static final ConfigStringList SWAP_ALMOST_BROKEN_TOOLS_BLACKLIST = new ConfigStringList("swapAlmostBrokenToolsBlacklist", ImmutableList.of(), "A blacklist of tools checked by the Swap Almost Broken Tools tweak.");
 
         public static final ImmutableList<IConfigBase> ADDITIONAL_OPTIONS = ImmutableList.of(
                 PERIMETER_OUTLINE_BLOCKS_LIST,
-                PREVENT_ATTACK_ENTITIES_LIST
+                PREVENT_ATTACK_ENTITIES_LIST,
+                SWAP_ALMOST_BROKEN_TOOLS_WHITELIST,
+                SWAP_ALMOST_BROKEN_TOOLS_BLACKLIST
         );
     }
 
