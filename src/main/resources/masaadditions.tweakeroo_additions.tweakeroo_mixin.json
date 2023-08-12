@@ -18,7 +18,8 @@
     "MixinInternalConfigs",
     "MixinListsConfigs",
     "MixinMiscTweaks",
-    "MixinPlacementTweaks"
+    "MixinPlacementTweaks",
+    "MixinInventoryUtils"
   ],
   "injectors": {
     "defaultRequire": 1
