@@ -34,7 +34,7 @@ public class MixinConfigs {
     }
 
     @Inject(method = "loadFromFile", at = @At("RETURN"))
-    private static void setPerimeterOutlineBlocks(CallbackInfo ci) {
+    private static void setTweakLists(CallbackInfo ci) {
         PlacementTweaks.setPerimeterOutlineBlocks(Lists.PERIMETER_OUTLINE_BLOCKS_LIST.getStrings());
         InventoryTweaks.setSwapAlmostBrokenToolsWhitelist(Lists.SWAP_ALMOST_BROKEN_TOOLS_WHITELIST.getStrings());
         InventoryTweaks.setSwapAlmostBrokenToolsBlacklist(Lists.SWAP_ALMOST_BROKEN_TOOLS_BLACKLIST.getStrings());
