@@ -3,6 +3,7 @@ package com.red.masaadditions.tweakeroo_additions.tweakeroo_mixin;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import fi.dy.masa.malilib.event.InitializationHandler;
 import fi.dy.masa.tweakeroo.config.Configs;
+import fi.dy.masa.tweakeroo.config.FeatureToggle;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,6 +16,7 @@ public class MixinInitializationHandler {
     @Inject(method = "onGameInitDone", at = @At("RETURN"))
     private void onGameInitDone(CallbackInfo ci) {
         // Hack fix to get around 'Mod Configs only loaded after mod initialisation' https://github.com/maruohon/malilib/issues/25
+        FeatureToggle.TWEAK_GAMMA_OVERRIDE.onValueChanged();
         Configs.Disable.DISABLE_SLIME_BLOCK_SLOWDOWN.onValueChanged();
         ConfigsExtended.Disable.DISABLE_HONEY_BLOCK_SLOWDOWN.onValueChanged();
         ConfigsExtended.Disable.DISABLE_HONEY_BLOCK_JUMPING.onValueChanged();
