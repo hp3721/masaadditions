@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(InventoryUtils.class)
+@Mixin(value = InventoryUtils.class, remap = false)
 public class MixinInventoryUtils {
     @Inject(method = "getMinDurability", at = @At(value = "FIELD", target = "Lfi/dy/masa/tweakeroo/config/Configs$Generic;ITEM_SWAP_DURABILITY_THRESHOLD:Lfi/dy/masa/malilib/config/options/ConfigInteger;"), cancellable = true)
     private static void applyCanSwapAlmostBrokenTool(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
