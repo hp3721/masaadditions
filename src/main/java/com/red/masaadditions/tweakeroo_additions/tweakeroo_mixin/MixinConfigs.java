@@ -3,6 +3,7 @@ package com.red.masaadditions.tweakeroo_additions.tweakeroo_mixin;
 import com.google.common.collect.ImmutableList;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended.Lists;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
+import com.red.masaadditions.tweakeroo_additions.tweaks.InventoryTweaks;
 import com.red.masaadditions.tweakeroo_additions.tweaks.PlacementTweaks;
 import fi.dy.masa.malilib.config.IHotkeyTogglable;
 import fi.dy.masa.tweakeroo.config.Configs;
@@ -33,7 +34,9 @@ public class MixinConfigs {
     }
 
     @Inject(method = "loadFromFile", at = @At("RETURN"))
-    private static void setPerimeterOutlineBlocks(CallbackInfo ci) {
+    private static void setTweakLists(CallbackInfo ci) {
         PlacementTweaks.setPerimeterOutlineBlocks(Lists.PERIMETER_OUTLINE_BLOCKS_LIST.getStrings());
+        InventoryTweaks.setSwapAlmostBrokenToolsWhitelist(Lists.SWAP_ALMOST_BROKEN_TOOLS_WHITELIST.getStrings());
+        InventoryTweaks.setSwapAlmostBrokenToolsBlacklist(Lists.SWAP_ALMOST_BROKEN_TOOLS_BLACKLIST.getStrings());
     }
 }
