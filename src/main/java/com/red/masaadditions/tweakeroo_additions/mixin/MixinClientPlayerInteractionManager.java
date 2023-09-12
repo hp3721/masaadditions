@@ -3,6 +3,8 @@ package com.red.masaadditions.tweakeroo_additions.mixin;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import com.red.masaadditions.tweakeroo_additions.tweaks.PlacementTweaks;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.Entity;
@@ -12,20 +14,33 @@ import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.NameTagItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.network.Packet;
+import net.minecraft.network.message.ArgumentSignatureDataMap;
+import net.minecraft.network.message.LastSeenMessagesCollector;
+import net.minecraft.network.packet.c2s.play.CommandExecutionC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import org.apache.commons.lang3.mutable.MutableObject;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class MixinClientPlayerInteractionManager {
+    @Shadow @Final private ClientPlayNetworkHandler networkHandler;
+
     @Inject(method = "attackBlock", at = @At("HEAD"), cancellable = true)
     private void handleBreakingRestriction1(BlockPos pos, Direction side, CallbackInfoReturnable<Boolean> cir) {
         if (PlacementTweaks.onProcessLeftClickBlock(pos) || PlacementTweaks.isPositionDisallowedByPerimeterOutlineList(pos)) {
@@ -65,6 +80,31 @@ public class MixinClientPlayerInteractionManager {
             if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || StreamSupport.stream(piglinEntity.getHandItems().spliterator(), false).noneMatch(itemStack -> itemStack.getItem() instanceof SwordItem)) {
                 cir.setReturnValue(ActionResult.PASS);
             }
+        }
+    }
+
+    @Inject(method = "method_41933", at = @At("HEAD"))
+    private void resetReplacementModeFlag(CallbackInfoReturnable<Packet<?>> cir) {
+        PlacementTweaks.replacementModeUseStack = null;
+    }
+
+    @Inject(method = "method_41933", at = @At("RETURN"), cancellable = true)
+    private void modifyPlacementPacket(MutableObject<ActionResult> result, ClientPlayerEntity player, Hand hand, BlockHitResult blockHitResult, int sequence, CallbackInfoReturnable<Packet<?>> cir) {
+        if (PlacementTweaks.replacementModeUseStack != null) {
+            if (!MinecraftClient.getInstance().isInSingleplayer()) {
+                List<String> commands = PlacementTweaks.getReplacementModeCommands(PlacementTweaks.replacementModeUseStack, sequence);
+                if (commands.isEmpty()) {
+                    // return some noop packet
+                    cir.setReturnValue(new PlayerMoveC2SPacket.OnGroundOnly(player.isOnGround()));
+                } else {
+                    for (int i = 0; i < commands.size() - 1; i++) {
+                        player.networkHandler.sendCommand(commands.get(i));
+                    }
+                    LastSeenMessagesCollector.LastSeenMessages lastSeenMessages = ((ClientPlayNetworkHandlerAccessor) player.networkHandler).getLastSeenMessagesCollector().collect();
+                    cir.setReturnValue(new CommandExecutionC2SPacket(commands.get(commands.size() - 1), Instant.now(), 0, ArgumentSignatureDataMap.EMPTY, lastSeenMessages.update()));
+                }
+            }
+            PlacementTweaks.replacementModeUseStack = null;
         }
     }
 }
