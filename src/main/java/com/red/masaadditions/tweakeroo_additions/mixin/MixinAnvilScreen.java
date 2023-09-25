@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screen.ingame.AnvilScreen;
 import net.minecraft.client.gui.screen.ingame.ForgingScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -23,7 +24,10 @@ public abstract class MixinAnvilScreen extends ForgingScreen<AnvilScreenHandler>
     @Redirect(method = "onSlotUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/TextFieldWidget;setText(Ljava/lang/String;)V"))
     private void setText(TextFieldWidget nameField, String text) {
         Slot slot = this.handler.getSlot(0);
-        if (FeatureToggleExtended.TWEAK_ITEM_NAME_COPY.getBooleanValue() && slot != null && slot.hasStack())
+        ItemStack stack = slot.getStack();
+        if (FeatureToggleExtended.TWEAK_ITEM_NAME_COPY.getBooleanValue() && slot.hasStack())
             nameField.setText(MinecraftClient.getInstance().keyboard.getClipboard());
+        else
+            nameField.setText(stack.isEmpty() ? "" : stack.getName().getString());
     }
 }
